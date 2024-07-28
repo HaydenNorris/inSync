@@ -3,13 +3,14 @@ import time
 
 attempt = 0
 app = None
-while attempt < 2:
+attempt_limit = 3
+while attempt < attempt_limit:
     try:
         app = create_app()
         break
     except Exception as e:
         attempt += 1
-        if attempt == 5:
+        if attempt == attempt_limit:
             raise e
         time.sleep(5)
         continue
