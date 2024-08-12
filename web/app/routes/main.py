@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify
+from flask_jwt_extended import create_access_token
 from app.models.Player import Player
 from app.models.Game import Game
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -27,4 +28,24 @@ def signup():
 
     new_player = Player(email=data['email'], name=data['name'], password=password)
     new_player.save()
-    return jsonify({'message': 'Player created successfully'}), 201
+
+    access_token = create_access_token(identity=new_player.id)
+    return jsonify({'message': 'Player created successfully', 'access_token': access_token}), 201
+
+
+@main_bp.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    for key in ['email', 'password']:
+        if key not in data:
+            return jsonify({'message': f'{key} is required'}), 400
+
+    player = Player.query.filter_by(email=data['email']).first()
+    if not player:
+        return jsonify({'message': 'Email not found'}), 404
+
+    if not check_password_hash(player.password, data['password']):
+        return jsonify({'message': 'Invalid password'}), 400
+
+    access_token = create_access_token(identity=player.id)
+    return jsonify({'message': 'Logged in successfully', 'access_token': access_token}), 200
