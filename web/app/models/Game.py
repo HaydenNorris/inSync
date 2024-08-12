@@ -6,12 +6,10 @@ from app.models.Player import Player
 
 class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    uuid = db.Column(db.String(80), nullable=False)
     status = db.Column(db.String(80), nullable=False)
     players = db.relationship('Player', secondary=game_player, back_populates='games')
 
     def __init__(self, players):
-        self.uuid = str(uuid4())
         self.status = 'NEW'
         self.players = players
 
