@@ -14,4 +14,24 @@ def create_game():
     if not current_user:
         return jsonify({'message': 'User not found'}), 404
     game = Game.create_game(current_user)
-    return jsonify({'game_id': game.id}), 201
+    return jsonify({'game_code': game.code}), 201
+
+
+@game_routes.route('/game/join', methods=['POST'])
+@jwt_required()
+def join_game():
+    user = Player.query.get(get_jwt_identity())
+    if not user:
+        return jsonify({'message': 'User not found'}), 404
+    data = request.get_json()
+    if 'game_code' not in data:
+        return jsonify({'message': 'game_code is required'}), 400
+    game = Game.get_game(data['game_code'], 'NEW')
+    if not game:
+        return jsonify({'message': 'Game not found'}), 404
+    try:
+        game.add_player(user)
+    except Exception as e:
+        return jsonify({'message': str(e)}), 400
+
+    return jsonify({'message': 'Success'}), 200
