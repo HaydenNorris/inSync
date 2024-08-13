@@ -7,16 +7,16 @@ from datetime import timedelta
 from datetime import timezone
 
 # Create a blueprint instance
-main_bp = Blueprint('main', __name__)
+user_routes = Blueprint('main', __name__)
 
 
 # Define routes for this blueprint
-@main_bp.route('/')
+@user_routes.route('/')
 def home():
     return 'Welcome to the Home Page!'
 
 
-@main_bp.route('/signup', methods=['POST'])
+@user_routes.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
     for key in ['name', 'email', 'password']:
@@ -36,7 +36,7 @@ def signup():
     return response
 
 
-@main_bp.route('/login', methods=['POST'])
+@user_routes.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
     for key in ['email', 'password']:
@@ -56,7 +56,7 @@ def login():
     return response, 200
 
 
-@main_bp.after_request
+@user_routes.after_request
 def refresh_expiring_jwt(response):
     try:
         exp_timestamp = get_jwt()["exp"]
@@ -70,14 +70,16 @@ def refresh_expiring_jwt(response):
         return response
 
 
-@main_bp.route("/logout", methods=["POST"])
+@user_routes.route("/logout", methods=["POST"])
 def logout():
     response = jsonify({"message": "Logged out"})
     unset_jwt_cookies(response)
     return response, 200
 
 
-@main_bp.route('/test', methods=['GET'])
+@user_routes.route('/test', methods=['GET', 'POST'])
 @jwt_required()
 def test():
-    return jsonify({'message': 'You are authorized to access this route'}), 200
+    current_user_id = get_jwt_identity()
+    current_user = Player.query.get(current_user_id)
+    return jsonify({'message': f'Hello, {current_user.name}'}), 200
