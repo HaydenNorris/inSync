@@ -1,8 +1,10 @@
 from flask import Blueprint, request, jsonify
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, set_access_cookies, unset_jwt_cookies, get_jwt
 from app.models.Player import Player
-from app.models.Game import Game
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
+from datetime import timedelta
+from datetime import timezone
 
 # Create a blueprint instance
 main_bp = Blueprint('main', __name__)
@@ -26,11 +28,12 @@ def signup():
     if player:
         return jsonify({'message': 'Player already exists'}), 400
 
-    new_player = Player(email=data['email'], name=data['name'], password=password)
-    new_player.save()
+    new_player = Player(email=data['email'], name=data['name'], password=password).save()
 
     access_token = create_access_token(identity=new_player.id)
-    return jsonify({'message': 'Player created successfully', 'access_token': access_token}), 201
+    response = jsonify({'message': 'Player created successfully'}), 201
+    set_access_cookies(response, access_token)
+    return response
 
 
 @main_bp.route('/login', methods=['POST'])
@@ -48,4 +51,33 @@ def login():
         return jsonify({'message': 'Invalid password'}), 400
 
     access_token = create_access_token(identity=player.id)
-    return jsonify({'message': 'Logged in successfully', 'access_token': access_token}), 200
+    response = jsonify({'message': 'Logged in successfully'})
+    set_access_cookies(response, access_token)
+    return response, 200
+
+
+@main_bp.after_request
+def refresh_expiring_jwt(response):
+    try:
+        exp_timestamp = get_jwt()["exp"]
+        now = datetime.now(timezone.utc)
+        target_timestamp = datetime.timestamp(now + timedelta(minutes=10))
+        if target_timestamp > exp_timestamp:
+            access_token = create_access_token(identity=get_jwt_identity())
+            set_access_cookies(response, access_token)
+        return response
+    except (RuntimeError, KeyError):
+        return response
+
+
+@main_bp.route("/logout", methods=["POST"])
+def logout():
+    response = jsonify({"message": "Logged out"})
+    unset_jwt_cookies(response)
+    return response, 200
+
+
+@main_bp.route('/test', methods=['GET'])
+@jwt_required()
+def test():
+    return jsonify({'message': 'You are authorized to access this route'}), 200
