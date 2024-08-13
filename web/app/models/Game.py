@@ -1,25 +1,26 @@
 from uuid import uuid4
 from app import db
-from app.models.GamePlayer import game_player
+from app.models.GamePlayer import GamePlayer
 from app.models.Player import Player
+from app.models import BaseModel
 
 
-class Game(db.Model):
+class Game(BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     status = db.Column(db.String(80), nullable=False)
     code = db.Column(db.String(6), nullable=False)
-    players = db.relationship('Player', secondary=game_player, back_populates='games')
+    players = db.relationship('Player', secondary='game_player', back_populates='games')
 
-    def __init__(self, players):
+    def __init__(self):
         self.status = 'NEW'
-        self.players = players
 
     @staticmethod
-    def create_game(player: Player):
-        game = Game(players=[player])
+    def create_game(player: Player, display_name: str = None):
+        game = Game()
         game.code = game.__generate_game_code()
         db.session.add(game)
         db.session.commit()
+        game.add_player(player, display_name, True)
         return game
 
     def __generate_game_code(self):
@@ -31,11 +32,12 @@ class Game(db.Model):
             return self.__generate_game_code()
         return code
 
-    def add_player(self, player: Player):
+    def add_player(self, player: Player, display_name: str = None, host: bool = False):
+        if not display_name:
+            display_name = player.name
         if player in self.players:
             raise Exception('Player already in game')
-        self.players.append(player)
-        db.session.commit()
+        GamePlayer(game_id=self.id, player_id=player.id, display_name=display_name, host=host).save()
         return self
 
     @staticmethod

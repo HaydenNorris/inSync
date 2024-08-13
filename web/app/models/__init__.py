@@ -1,6 +1,8 @@
 import importlib
 import pkgutil
 import os
+from app import db
+
 
 def import_all_models():
     # Directory containing the model files
@@ -11,3 +13,12 @@ def import_all_models():
         if module_name == '__init__':
             continue
         importlib.import_module(f'app.models.{module_name}')
+
+
+class BaseModel(db.Model):
+    __abstract__ = True
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+        return self

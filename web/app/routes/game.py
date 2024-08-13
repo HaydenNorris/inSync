@@ -13,7 +13,8 @@ def create_game():
     current_user = Player.query.get(current_user_id)
     if not current_user:
         return jsonify({'message': 'User not found'}), 404
-    game = Game.create_game(current_user)
+    display_name = request.get_json().get('display_name', current_user.name)
+    game = Game.create_game(current_user, display_name)
     return jsonify({'game_code': game.code}), 201
 
 
@@ -29,8 +30,9 @@ def join_game():
     game = Game.get_game(data['game_code'], 'NEW')
     if not game:
         return jsonify({'message': 'Game not found'}), 404
+    display_name = data.get('display_name', user.name)
     try:
-        game.add_player(user)
+        game.add_player(user, display_name)
     except Exception as e:
         return jsonify({'message': str(e)}), 400
 
