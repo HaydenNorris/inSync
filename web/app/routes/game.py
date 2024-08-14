@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from app.models.Player import Player
 from app.models.Game import Game
+from app.models.GamePlayer import GamePlayer
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 game_routes = Blueprint('game', __name__)
@@ -37,3 +38,27 @@ def join_game():
         return jsonify({'message': str(e)}), 400
 
     return jsonify({'message': 'Success'}), 200
+
+
+@game_routes.route('/game/<game_code>/players', methods=['GET'])
+@jwt_required()
+def game_players(game_code: str):
+    user = Player.query.get(get_jwt_identity())
+    game = Game.get_game(game_code=game_code, active_only=True)
+    if not game:
+        return jsonify({'message': 'No active game found'}), 404
+
+    player_belongs = False
+
+    players = GamePlayer.query.filter_by(game_id=game.id).all()
+
+    body = []
+    for gp in players:
+        body.append({'id': gp.player_id, 'display_name': gp.display_name, 'host': gp.host})
+        if gp.player_id == user.id:
+            player_belongs = True
+
+    if not player_belongs:
+        return jsonify({'message': 'You are not in this game'}), 403
+
+    return jsonify(body), 200
