@@ -20,7 +20,7 @@ def create_app():
 
     JWTManager(app)
     # set up CORS to allow all origins and accept cookies
-    CORS(app, supports_credentials=True, resources={r"/*": {"origins": "http://127.0.0.1:5173"}})
+    CORS(app, supports_credentials=True, resources={r"/*": {"origins": "*"}})
 
     # Import and register blueprints
     from app.routes.user import user_routes
