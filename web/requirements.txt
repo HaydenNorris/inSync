@@ -1,6 +1,7 @@
 Flask
 Flask-SQLAlchemy
 Flask-Migrate
+flask_cors
 mysqlclient
 pymysql
 cryptography

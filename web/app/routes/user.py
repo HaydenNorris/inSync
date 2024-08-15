@@ -51,9 +51,18 @@ def login():
         return jsonify({'message': 'Invalid password'}), 400
 
     access_token = create_access_token(identity=player.id)
-    response = jsonify({'message': 'Logged in successfully'})
+    response = jsonify({'message': 'Logged in successfully', 'token': access_token})
     set_access_cookies(response, access_token)
     return response, 200
+
+
+@user_routes.route('/user', methods=['GET'])
+@jwt_required()
+def user():
+    player = Player.query.get(get_jwt_identity())
+    if not player:
+        return jsonify({'message': 'Player not found'}), 404
+    return jsonify({'name': player.name, 'email': player.email}), 200
 
 
 @user_routes.after_request
