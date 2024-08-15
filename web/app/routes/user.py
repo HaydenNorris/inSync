@@ -31,7 +31,7 @@ def signup():
     new_player = Player(email=data['email'], name=data['name'], password=password).save()
 
     access_token = create_access_token(identity=new_player.id)
-    response = jsonify({'message': 'Player created successfully'})
+    response = jsonify({'message': 'Player created successfully', 'token': access_token})
     set_access_cookies(response, access_token)
     return response, 201
 
