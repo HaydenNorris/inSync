@@ -16,7 +16,7 @@ def create_game():
         return jsonify({'message': 'User not found'}), 404
     display_name = request.get_json().get('display_name', current_user.name)
     game = Game.create_game(current_user, display_name)
-    return jsonify({'game_code': game.code}), 201
+    return jsonify({'game_code': game.code, 'id': game.id}), 201
 
 
 @game_routes.route('/game/join', methods=['POST'])
@@ -37,14 +37,14 @@ def join_game():
     except Exception as e:
         return jsonify({'message': str(e)}), 400
 
-    return jsonify({'message': 'Success'}), 200
+    return jsonify({'game_code': game.code, 'id': game.id}), 200
 
 
-@game_routes.route('/game/<game_code>/players', methods=['GET'])
+@game_routes.route('/game/<int:game_id>/players', methods=['GET'])
 @jwt_required()
-def game_players(game_code: str):
+def game_players(game_id: int):
     user = Player.query.get(get_jwt_identity())
-    game = Game.get_game(game_code=game_code, active_only=True)
+    game = Game.query.filter(Game.id == game_id, Game.status != 'FINISHED').first()
     if not game:
         return jsonify({'message': 'No active game found'}), 404
 
@@ -54,7 +54,7 @@ def game_players(game_code: str):
 
     body = []
     for gp in players:
-        body.append({'id': gp.player_id, 'display_name': gp.display_name, 'host': gp.host})
+        body.append({'player_id': gp.player_id, 'display_name': gp.display_name, 'host': gp.host})
         if gp.player_id == user.id:
             player_belongs = True
 
