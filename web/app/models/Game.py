@@ -15,7 +15,7 @@ class Game(BaseModel):
         self.status = 'NEW'
 
     @staticmethod
-    def create_game(player: Player, display_name: str = None):
+    def create_game(player: Player, display_name: str = None) -> 'Game':
         game = Game()
         game.code = game.__generate_game_code()
         db.session.add(game)

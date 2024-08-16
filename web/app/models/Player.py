@@ -1,7 +1,5 @@
 from app import db
 from app.models import BaseModel
-from app.models.GamePlayer import GamePlayer
-
 
 class Player(BaseModel):
     id = db.Column(db.Integer, primary_key=True)
@@ -11,4 +9,4 @@ class Player(BaseModel):
     games = db.relationship('Game', secondary='game_player', back_populates='players')
 
     def __repr__(self):
-        return f"Player('{self.name}', '{self.status}')"
+        return f"Player('{self.name}')"
