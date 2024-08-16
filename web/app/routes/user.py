@@ -19,9 +19,11 @@ def home():
 @user_routes.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
-    for key in ['name', 'email', 'password']:
+    for key in ['name', 'email', 'password', 'confirm_password']:
         if key not in data:
             return jsonify({'message': f'{key} is required'}), 400
+    if data['password'] != data['confirm_password']:
+        return jsonify({'message': 'Passwords do not match'}), 400
 
     password = generate_password_hash(data['password'])
     player = Player.query.filter_by(email=data['email']).first()
@@ -62,7 +64,7 @@ def user():
     player = Player.query.get(get_jwt_identity())
     if not player:
         return jsonify({'message': 'Player not found'}), 404
-    return jsonify({'name': player.name, 'email': player.email}), 200
+    return jsonify({'name': player.name, 'email': player.email, 'id': player.id}), 200
 
 
 @user_routes.after_request
