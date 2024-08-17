@@ -90,13 +90,13 @@ def get_clue(game: 'Game', player: 'Player', clue_num: int, *args, **kwargs):
     # get all the clues for the game and player
     try:
         clue = game.get_clues_for(player, clue_num)
-        return jsonify({'clue': {
+        return jsonify({
             'high': clue.scale.high,
             'low': clue.scale.low,
             'value': clue.value,
             'max_value': clue.max_value,
             'clue': clue.clue,
-        }}), 200
+        }), 200
     except Exception as e:
         return jsonify({'message': str(e)}), 500
 
