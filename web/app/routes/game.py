@@ -88,8 +88,8 @@ def start_game(game: 'Game', *args, **kwargs):
 @player_must_be_in_game()
 def get_clue(game: 'Game', player: 'Player', clue_num: int, *args, **kwargs):
     # get all the clues for the game and player
-    clue = game.get_clues_for(player, clue_num)
     try:
+        clue = game.get_clues_for(player, clue_num)
         return jsonify({'clue': {
             'high': clue.scale.high,
             'low': clue.scale.low,
@@ -98,6 +98,6 @@ def get_clue(game: 'Game', player: 'Player', clue_num: int, *args, **kwargs):
             'clue': clue.clue,
         }}), 200
     except Exception as e:
-        return jsonify({'message': str(e)}), 404
+        return jsonify({'message': str(e)}), 500
 
 
