@@ -2,6 +2,8 @@ from uuid import uuid4
 from app import db
 from app.models.GamePlayer import GamePlayer
 from app.models import BaseModel, Player
+from app.models.Scale import Scale
+from sqlalchemy.ext.hybrid import hybrid_property
 
 
 class Game(BaseModel):
@@ -14,8 +16,9 @@ class Game(BaseModel):
     _status = db.Column('status', db.String(80), nullable=False)
     code = db.Column(db.String(6), nullable=False)
     players = db.relationship('Player', secondary='game_player', back_populates='games')
+    clues = db.relationship('Clue', back_populates='game')
 
-    @property
+    @hybrid_property
     def status(self):
         return self._status
 
@@ -72,11 +75,28 @@ class Game(BaseModel):
             GamePlayer(game_id=self.id, player_id=player.id, display_name=display_name, host=host).save()
         return self
 
-    @staticmethod
-    def get_game(game_code: str, status: str = None, active_only: bool = False):
-        query = Game.query.filter(Game.code == game_code)
-        if active_only:
-            query.filter(Game.status != Game.STATUS_FINISHED)
-        if status:
-            query.filter(Game.status == status)
-        return query.first()
+    def get_clues_for(self, player: Player, clue_num: int) -> 'Clue':
+        from app.models.Clue import Clue
+        if self.status != self.STATUS_CLUE_GIVING:
+            raise Exception('Game is not in the clue giving status')
+        if clue_num < 1 or clue_num > 3:
+            raise Exception('Clue number must be between 1 and 3')
+        play_clues = Clue.query.filter_by(game_id=self.id, player_id=player.id).order_by(Clue.id).all()
+        player_scale_ids = [c.scale_id for c in play_clues]
+
+        # if the user has less than the requested number of clues, add more
+        while len(play_clues) < clue_num:
+            new_clue = self.__add_clue(player, player_scale_ids)
+            play_clues.append(new_clue)
+            player_scale_ids.append(new_clue.scale_id)
+
+        return play_clues[clue_num - 1]
+
+
+    def __add_clue(self, player: Player, exclude_scale_ids:list) -> 'Clue':
+        from app.models.Clue import Clue
+        scale = Scale.get_random_scale(exclude=exclude_scale_ids)
+        clue = Clue.create(self, player, scale)
+        return clue
+
+

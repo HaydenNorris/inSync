@@ -22,18 +22,19 @@ def create_app():
     # set up CORS to allow all origins and accept cookies
     CORS(app, supports_credentials=True, resources={r"/*": {"origins": "*"}})
 
-    # Import and register blueprints
-    from app.routes.user import user_routes
-    from app.routes.game import game_routes
-    app.register_blueprint(user_routes)
-    app.register_blueprint(game_routes)
-
     db.init_app(app)
     with app.app_context():
         # now import the models from the models module
         from app.models import import_all_models
         import_all_models()
         db.create_all()
+
+    # Import and register blueprints
+    from app.routes.player import player_routes
+    from app.routes.game import game_routes
+    app.register_blueprint(player_routes)
+    app.register_blueprint(game_routes)
+
 
     # add seeders to app to be called from the command line
     # note to run these, you do not need to run the python interpreter,

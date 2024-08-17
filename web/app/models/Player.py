@@ -9,8 +9,8 @@ class Player(BaseModel):
     name = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(250), nullable=False)
     password = db.Column(db.String(250), nullable=False)
-    games = db.relationship('Game', secondary='game_player', back_populates='players')
-    game_players = db.relationship('GamePlayer', back_populates='player')
+    games = db.relationship('Game', secondary='game_player', viewonly=True)
+    game_players = db.relationship('GamePlayer', viewonly=True)
 
     def __repr__(self):
         return f"Player('{self.name}')"

@@ -7,16 +7,16 @@ from datetime import timedelta
 from datetime import timezone
 
 # Create a blueprint instance
-user_routes = Blueprint('main', __name__)
+player_routes = Blueprint('main', __name__)
 
 
 # Define routes for this blueprint
-@user_routes.route('/')
+@player_routes.route('/')
 def home():
     return 'Welcome to the Home Page!'
 
 
-@user_routes.route('/signup', methods=['POST'])
+@player_routes.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
     for key in ['name', 'email', 'password', 'confirm_password']:
@@ -38,7 +38,7 @@ def signup():
     return response, 201
 
 
-@user_routes.route('/login', methods=['POST'])
+@player_routes.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
     for key in ['email', 'password']:
@@ -58,16 +58,16 @@ def login():
     return response, 200
 
 
-@user_routes.route('/user', methods=['GET'])
+@player_routes.route('/player', methods=['GET'])
 @jwt_required()
-def user():
+def player():
     player = Player.query.get(get_jwt_identity())
     if not player:
         return jsonify({'message': 'Player not found'}), 404
     return jsonify({'name': player.name, 'email': player.email, 'id': player.id}), 200
 
 
-@user_routes.after_request
+@player_routes.after_request
 def refresh_expiring_jwt(response):
     try:
         exp_timestamp = get_jwt()["exp"]
@@ -81,16 +81,16 @@ def refresh_expiring_jwt(response):
         return response
 
 
-@user_routes.route("/logout", methods=["POST"])
+@player_routes.route("/logout", methods=["POST"])
 def logout():
     response = jsonify({"message": "Logged out"})
     unset_jwt_cookies(response)
     return response, 200
 
 
-@user_routes.route('/test', methods=['GET', 'POST'])
+@player_routes.route('/test', methods=['GET', 'POST'])
 @jwt_required()
 def test():
-    current_user_id = get_jwt_identity()
-    current_user = Player.query.get(current_user_id)
-    return jsonify({'message': f'Hello, {current_user.name}'}), 200
+    current_player_id = get_jwt_identity()
+    current_player = Player.query.get(current_player_id)
+    return jsonify({'message': f'Hello, {current_player.name}'}), 200

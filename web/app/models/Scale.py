@@ -7,3 +7,11 @@ class Scale(BaseModel):
     low = db.Column(db.String(80), nullable=False)
     high = db.Column(db.String(80), nullable=False)
     created_by_id = db.Column(db.Integer, db.ForeignKey('player.id'), nullable=True)
+
+    @staticmethod
+    def get_random_scale(exclude=None) -> 'Scale':
+        if exclude is None:
+            exclude = []
+        return (Scale.query
+                .filter(Scale.id.notin_(exclude))
+                .order_by(db.func.random()).first())
