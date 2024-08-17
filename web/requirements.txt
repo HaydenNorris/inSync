@@ -6,3 +6,5 @@ mysqlclient
 pymysql
 cryptography
 Flask-JWT-Extended
+flask-socketio
+eventlet
