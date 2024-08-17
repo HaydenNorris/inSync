@@ -80,7 +80,7 @@ def start_game(game: 'Game', *args, **kwargs):
     try:
         game.set_status(Game.STATUS_CLUE_GIVING)
     except Exception as e:
-        return jsonify({'message': "Failed to start game"}), 400
+        return jsonify({'message': f"Failed to start game: {str(e)}"}), 400
 
     return jsonify({'message': 'Game started'}), 200
 
