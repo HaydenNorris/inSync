@@ -68,9 +68,8 @@ class Game(BaseModel):
     def add_player(self, player: Player, display_name: str = None, host: bool = False):
         if not display_name:
             display_name = player.name
-        if player in self.players:
-            raise Exception('Player already in game')
-        GamePlayer(game_id=self.id, player_id=player.id, display_name=display_name, host=host).save()
+        if not player.in_game(self):
+            GamePlayer(game_id=self.id, player_id=player.id, display_name=display_name, host=host).save()
         return self
 
     @staticmethod

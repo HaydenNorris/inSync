@@ -17,7 +17,7 @@ def player_must_be_in_game(host: bool = False):
             if not game:
                 return jsonify({'message': 'Game not found'}), 404
 
-            if not user.belongs_to_game(game):
+            if not user.in_game(game):
                 return jsonify({'message': 'You are not in this game'}), 403
 
             if host and not user.is_host(game):
@@ -30,33 +30,37 @@ def player_must_be_in_game(host: bool = False):
         return wrapper
     return decorator
 
+def player_must_be_logged_in(func):
+    @wraps(func)
+    @jwt_required()
+    def wrapper(*args, **kwargs):
+        user = Player.query.get(get_jwt_identity())
+        if not user:
+            return jsonify({'message': 'User not found'}), 404
+        kwargs['user'] = user
+        return func(*args, **kwargs)
+    return wrapper
+
 @game_routes.route('/game', methods=['POST'])
-@jwt_required()
-def create_game():
-    current_user_id = get_jwt_identity()
-    current_user = Player.query.get(current_user_id)
-    if not current_user:
-        return jsonify({'message': 'User not found'}), 404
-    display_name = request.get_json().get('display_name', current_user.name)
-    game = Game.create(current_user, display_name)
+@player_must_be_logged_in
+def create_game(user: 'Player', *args, **kwargs):
+    display_name = request.get_json().get('display_name', user.name)
+    game = Game.create(user, display_name)
     return jsonify({'game_code': game.code, 'id': game.id}), 201
 
 
 @game_routes.route('/game/join', methods=['POST'])
-@jwt_required()
-def join_game():
-    user = Player.query.get(get_jwt_identity())
-    if not user:
-        return jsonify({'message': 'User not found'}), 404
+@player_must_be_logged_in
+def join_game(user: 'Player', *args, **kwargs):
     data = request.get_json()
-    if 'game_code' not in data:
+    code = data.get('game_code')
+    if code not in data:
         return jsonify({'message': 'game_code is required'}), 400
-    game = Game.get_game(data['game_code'], 'NEW')
+    game = Game.query.filter(Game.code == data.get('game_code'), Game.status == Game.STATUS_NEW).first()
     if not game:
-        return jsonify({'message': 'Game not found'}), 404
-    display_name = data.get('display_name', user.name)
+        return jsonify({'message': f'Game not found for code {code}'}), 404
     try:
-        game.add_player(user, display_name)
+        game.add_player(user, data.get('display_name', user.name))
     except Exception as e:
         return jsonify({'message': str(e)}), 400
 

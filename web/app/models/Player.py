@@ -15,7 +15,7 @@ class Player(BaseModel):
     def __repr__(self):
         return f"Player('{self.name}')"
 
-    def belongs_to_game(self, game):
+    def in_game(self, game):
         return game in self.games
 
     def is_host(self, game: 'Game'):
