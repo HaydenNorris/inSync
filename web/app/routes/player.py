@@ -1,6 +1,5 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, set_access_cookies, unset_jwt_cookies, get_jwt
-from flask_socketio import SocketIO
 from app.models.Player import Player
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
@@ -9,7 +8,6 @@ from datetime import timezone
 
 # Create a blueprint instance
 player_routes = Blueprint('main', __name__)
-socketio = SocketIO(player_routes, async_mode='eventlet')
 
 
 # Define routes for this blueprint
@@ -96,8 +94,3 @@ def test():
     current_player_id = get_jwt_identity()
     current_player = Player.query.get(current_player_id)
     return jsonify({'message': f'Hello, {current_player.name}'}), 200
-
-@socketio.on('message')
-def handle_message(data):
-    print('received message: ' + data)
-    socketio.send('Echo: ' + data)
