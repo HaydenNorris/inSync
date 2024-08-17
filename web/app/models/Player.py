@@ -19,4 +19,4 @@ class Player(BaseModel):
         return game in self.games
 
     def is_host(self, game: 'Game'):
-       return self.game_players.filter(GamePlayer.game_id == game.id, GamePlayer.host == True).first() is not None
+       return GamePlayer.query.filter_by(player_id=self.id, game_id=game.id, host=True).first() is not None
