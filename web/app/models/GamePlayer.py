@@ -9,6 +9,7 @@ class GamePlayer(BaseModel):
     player_id = db.Column(db.Integer, db.ForeignKey('player.id'), nullable=False)
     display_name = db.Column(db.String(80), nullable=False)
     host = db.Column(db.Boolean, default=False)
+    player = db.relationship('Player', back_populates='game_players')
 
     def __init__(self, game_id, player_id, display_name, host=False):
         self.game_id = game_id
