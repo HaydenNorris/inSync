@@ -51,3 +51,12 @@ class Clue(BaseModel):
         self.guess_value = guess
         return self.save()
 
+    def refresh(self) -> 'Clue':
+        self._value = Random().randint(1, self._max_value)
+        self.clue = None
+        player_clues = Clue.query.filter_by(game_id=self.game_id, player_id=self.player_id).all()
+        player_scale_ids = [c.scale_id for c in player_clues]
+        scale = Scale.get_random_scale(player_scale_ids)
+        self.scale_id = scale.id
+        return self.save()
+

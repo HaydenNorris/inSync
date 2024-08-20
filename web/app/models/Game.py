@@ -33,8 +33,8 @@ class Game(BaseModel):
             raise Exception('Game already started')
 
         if value == self.STATUS_CLUE_GIVING:
-            if len(self.players) < 2:
-                raise Exception('Invalid status change: Game must have at least 2 players')
+            # if len(self.players) < 2:
+            #     raise Exception('Invalid status change: Game must have at least 2 players')
 
             if self.status != self.STATUS_NEW:
                 raise Exception('Invalid status change: Game must be in status NEW to change to CLUE_GIVING')
@@ -98,5 +98,15 @@ class Game(BaseModel):
         scale = Scale.get_random_scale(exclude=exclude_scale_ids)
         clue = Clue.create(self, player, scale)
         return clue
+
+    def all_clues_given(self):
+        player_count = len(self.players)
+        clues = self.clues
+        if len(clues) < player_count * 3:
+            return False
+        for clue in clues:
+            if not clue.clue:
+                return False
+        return True
 
 
