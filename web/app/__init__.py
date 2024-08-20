@@ -40,7 +40,7 @@ def create_app():
     # note to run these, you do not need to run the python interpreter,
     # simply execute the command in the terminal e.g. flask seed:users
     from app.seeders.scales import seed_scales
-    from app.seeders.users import seed_players
+    from app.seeders.players import seed_players
     from app.seeders.games import seed_games
     from app.seeders.all import seed_all
     app.cli.add_command(seed_scales)
