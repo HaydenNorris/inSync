@@ -1,5 +1,7 @@
 from functools import wraps
 from flask import Blueprint, request, jsonify
+
+from app.models.Clue import Clue
 from app.models.Player import Player
 from app.models.Game import Game
 from app.models.GamePlayer import GamePlayer
@@ -66,6 +68,10 @@ def join_game(player: 'Player', *args, **kwargs):
 
     return jsonify({'game_code': game.code, 'id': game.id}), 200
 
+@game_routes.route('/game/<int:game_id>')
+@player_must_be_in_game()
+def get_game(game: 'Game', *args, **kwargs):
+    return jsonify({'game_code': game.code, 'id': game.id, 'status': game.status}), 200
 
 @game_routes.route('/game/<int:game_id>/players', methods=['GET'])
 @player_must_be_in_game()
@@ -90,14 +96,74 @@ def get_clue(game: 'Game', player: 'Player', clue_num: int, *args, **kwargs):
     # get all the clues for the game and player
     try:
         clue = game.get_clues_for(player, clue_num)
-        return jsonify({'clue': {
+        return jsonify({
+            'id': clue.id,
             'high': clue.scale.high,
             'low': clue.scale.low,
             'value': clue.value,
             'max_value': clue.max_value,
             'clue': clue.clue,
-        }}), 200
+        }), 200
     except Exception as e:
         return jsonify({'message': str(e)}), 500
 
+@game_routes.route('/clue/<int:clue_id>', methods=['PATCH'])
+@player_must_be_logged_in
+def submit_clue(player: 'Player', clue_id: int, *args, **kwargs):
+    clue = Clue.query.filter(Clue.id == clue_id, Clue.player_id == player.id).first()
+    if not clue:
+        return jsonify({'message': 'Clue not found'}), 404
 
+    data = request.get_json()
+    clue_value = data.get('clue')
+    if not clue_value:
+        return jsonify({'message': f'clue value is required'}), 400
+
+    try:
+        clue.clue = clue_value
+        clue.save()
+    except Exception as e:
+        return jsonify({'message': 'Failed to save'}), 400
+
+    game = clue.game
+    if game.all_clues_given():
+        game.set_status(Game.STATUS_GUESSING)
+
+    return jsonify({'message': 'Clue submitted'}), 200
+
+
+@game_routes.route('/clue/<int:clue_id>/refresh')
+@player_must_be_logged_in
+def refresh_clue(player: 'Player', clue_id: int, *args, **kwargs):
+    clue = Clue.query.filter(Clue.id == clue_id, Clue.player_id == player.id).first()
+    if not clue:
+        return jsonify({'message': 'Clue not found'}), 404
+
+    try:
+        clue = clue.refresh()
+        return jsonify({
+            'id': clue.id,
+            'high': clue.scale.high,
+            'low': clue.scale.low,
+            'value': clue.value,
+            'max_value': clue.max_value,
+            'clue': clue.clue,
+        }), 200
+    except Exception as e:
+        return jsonify({'message': 'Failed to refresh'}), 400
+
+@game_routes.route('/game/<int:game_id>/guess')
+@player_must_be_in_game()
+def guess(game: 'Game', player: 'Player', *args, **kwargs):
+    clue = Clue.query.filter(Clue.game_id == game.id, Clue.guess_value == None).first()
+    if not clue:
+        return jsonify({'message': 'No more clues to guess'}), 400
+    return jsonify({
+        'id': clue.id,
+        'high': clue.scale.high,
+        'low': clue.scale.low,
+        'value': clue.value,
+        'max_value': clue.max_value,
+        'clue': clue.clue,
+        'player_id': clue.player_id,
+    }), 200
