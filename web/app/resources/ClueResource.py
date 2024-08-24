@@ -21,5 +21,6 @@ class ClueResource(Resource):
             'clue': self.clue.clue,
             'player_id': self.clue.player_id,
             'player_name': game_player.display_name,
-            'total_clues': len(self.clue.game.clues)
+            'total_clues': len(self.clue.game.clues),
+            'guess_value': self.clue.guess_value,
         }

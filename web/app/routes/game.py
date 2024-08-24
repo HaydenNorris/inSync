@@ -120,24 +120,36 @@ def get_clue(game: 'Game', player: 'Player', clue_num: int, *args, **kwargs):
 @game_routes.route('/clue/<int:clue_id>', methods=['PATCH'])
 @player_must_be_logged_in
 def submit_clue(player: 'Player', clue_id: int, *args, **kwargs):
-    clue = Clue.query.filter(Clue.id == clue_id, Clue.player_id == player.id).first()
+
+    clue = Clue.query.filter(Clue.id == clue_id).first()
     if not clue:
         return jsonify({'message': 'Clue not found'}), 404
 
     data = request.get_json()
-    clue_value = data.get('clue')
-    if not clue_value:
-        return jsonify({'message': f'clue value is required'}), 400
+    clue_prompt = data.get('clue')
+    if clue_prompt:
+        try:
+            if clue.player_id != player.id:
+                return jsonify({'message': 'You are not the owner of this clue'}), 403
+            clue.clue = clue_prompt
+            clue.save()
+        except Exception as e:
+            return jsonify({'message': 'Failed to save'}), 400
 
-    try:
-        clue.clue = clue_value
-        clue.save()
-    except Exception as e:
-        return jsonify({'message': 'Failed to save'}), 400
+        game = clue.game
+        if game.all_clues_given():
+            game.set_status(Game.STATUS_GUESSING)
+            socketio.emit('game_updated', GameResource(game).data(), room=game.socket_room)
 
-    game = clue.game
-    if game.all_clues_given():
-        game.set_status(Game.STATUS_GUESSING)
+    guess_value = data.get('guess_value', None)
+    if not guess_value is None:
+        try:
+            clue.guess_value = guess_value
+            clue.save()
+        except Exception as e:
+            return jsonify({'message': 'Failed to save'}), 400
+
+        socketio.emit('clue_updated', ClueResource(clue).data(), room=clue.game.socket_room)
 
     return jsonify({'message': 'Clue submitted'}), 200
 
