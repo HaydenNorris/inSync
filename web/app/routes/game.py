@@ -7,6 +7,7 @@ from app.models.Game import Game
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_socketio import emit, join_room, leave_room
 from app import socketio
+from app.resources.ClueResource import ClueResource
 from app.resources.GamePlayersResource import GamePlayersResource
 from app.resources.GameResource import GameResource
 
@@ -63,7 +64,7 @@ def on_join_game(data):
 def create_game(player: 'Player', *args, **kwargs):
     display_name = request.get_json().get('display_name', player.name)
     game = Game.create(player, display_name)
-    return jsonify({'game_code': game.code, 'id': game.id}), 201
+    return GameResource(game).json(), 201
 
 
 @game_routes.route('/game/join', methods=['POST'])
@@ -81,7 +82,7 @@ def join_game(player: 'Player', *args, **kwargs):
     except Exception as e:
         return jsonify({'message': str(e)}), 400
 
-    return jsonify({'game_code': game.code, 'id': game.id}), 200
+    return GameResource(game).json(), 200
 
 @game_routes.route('/game/<int:game_id>')
 @player_must_be_in_game()
@@ -112,14 +113,7 @@ def get_clue(game: 'Game', player: 'Player', clue_num: int, *args, **kwargs):
     # get all the clues for the game and player
     try:
         clue = game.get_clues_for(player, clue_num)
-        return jsonify({
-            'id': clue.id,
-            'high': clue.scale.high,
-            'low': clue.scale.low,
-            'value': clue.value,
-            'max_value': clue.max_value,
-            'clue': clue.clue,
-        }), 200
+        return ClueResource(clue).json(), 200
     except Exception as e:
         return jsonify({'message': str(e)}), 500
 
@@ -157,14 +151,7 @@ def refresh_clue(player: 'Player', clue_id: int, *args, **kwargs):
 
     try:
         clue = clue.refresh()
-        return jsonify({
-            'id': clue.id,
-            'high': clue.scale.high,
-            'low': clue.scale.low,
-            'value': clue.value,
-            'max_value': clue.max_value,
-            'clue': clue.clue,
-        }), 200
+        return ClueResource(clue).json(), 200
     except Exception as e:
         return jsonify({'message': 'Failed to refresh'}), 400
 
@@ -174,12 +161,4 @@ def guess(game: 'Game', player: 'Player', *args, **kwargs):
     clue = Clue.query.filter(Clue.game_id == game.id, Clue.guess_value == None).first()
     if not clue:
         return jsonify({'message': 'No more clues to guess'}), 400
-    return jsonify({
-        'id': clue.id,
-        'high': clue.scale.high,
-        'low': clue.scale.low,
-        'value': clue.value,
-        'max_value': clue.max_value,
-        'clue': clue.clue,
-        'player_id': clue.player_id,
-    }), 200
+    return ClueResource(clue).json(), 200
