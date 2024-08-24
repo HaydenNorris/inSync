@@ -4,10 +4,11 @@ from flask import Blueprint, request, jsonify
 from app.models.Clue import Clue
 from app.models.Player import Player
 from app.models.Game import Game
-from app.models.GamePlayer import GamePlayer
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask_socketio import emit, join_room, leave_room
 from app import socketio
+from app.resources.GamePlayersResource import GamePlayersResource
+from app.resources.GameResource import GameResource
 
 game_routes = Blueprint('game', __name__)
 
@@ -54,11 +55,8 @@ def on_join_game(data):
         emit('error', {'message': 'Game not found'}, room=request.sid)
         return
 
-    room = f"game_{game_code}_{game_id}"
-    join_room(room)
-    emit('new_player_joined', room=room)
-    players = GamePlayer.query.filter_by(game_id=game.id).all()
-    emit('player_list', [{'player_id': gp.player_id, 'display_name': gp.display_name, 'host': gp.host} for gp in players], room=room)
+    join_room(game.socket_room)
+    emit('player_list', GamePlayersResource(game).data(), room=game.socket_room)
 
 @game_routes.route('/game', methods=['POST'])
 @player_must_be_logged_in
@@ -88,13 +86,12 @@ def join_game(player: 'Player', *args, **kwargs):
 @game_routes.route('/game/<int:game_id>')
 @player_must_be_in_game()
 def get_game(game: 'Game', *args, **kwargs):
-    return jsonify({'game_code': game.code, 'id': game.id, 'status': game.status}), 200
+    return GameResource(game).json(), 200
 
 @game_routes.route('/game/<int:game_id>/players', methods=['GET'])
 @player_must_be_in_game()
 def game_players(game: 'Game', *args, **kwargs):
-    players = GamePlayer.query.filter_by(game_id=game.id).all()
-    return jsonify([{ 'player_id': gp.player_id, 'display_name': gp.display_name, 'host': gp.host } for gp in players]), 200
+    return GamePlayersResource(game).json(), 200
 
 
 @game_routes.route('/game/<int:game_id>/start', methods=['PUT'])
@@ -104,6 +101,8 @@ def start_game(game: 'Game', *args, **kwargs):
         game.set_status(Game.STATUS_CLUE_GIVING)
     except Exception as e:
         return jsonify({'message': f"Failed to start game: {str(e)}"}), 400
+
+    socketio.emit('game_updated', GameResource(game).data(), room=game.socket_room)
 
     return jsonify({'message': 'Game started'}), 200
 
