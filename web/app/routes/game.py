@@ -6,6 +6,8 @@ from app.models.Player import Player
 from app.models.Game import Game
 from app.models.GamePlayer import GamePlayer
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_socketio import emit, join_room, leave_room
+from app import socketio
 
 game_routes = Blueprint('game', __name__)
 
@@ -42,6 +44,21 @@ def player_must_be_logged_in(func):
         kwargs['player'] = player
         return func(*args, **kwargs)
     return wrapper
+
+@socketio.on('join_game')
+def on_join_game(data):
+    game_id = data.get('game_id')
+    game_code = data.get('game_code')
+    game = Game.query.filter(Game.id == game_id, Game.code == game_code).first()
+    if not game:
+        emit('error', {'message': 'Game not found'}, room=request.sid)
+        return
+
+    room = f"game_{game_code}_{game_id}"
+    join_room(room)
+    emit('new_player_joined', room=room)
+    players = GamePlayer.query.filter_by(game_id=game.id).all()
+    emit('player_list', [{'player_id': gp.player_id, 'display_name': gp.display_name, 'host': gp.host} for gp in players], room=room)
 
 @game_routes.route('/game', methods=['POST'])
 @player_must_be_logged_in

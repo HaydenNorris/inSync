@@ -1,14 +1,17 @@
 import os
+import logging
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
+from flask_socketio import SocketIO
 
 db = SQLAlchemy()
-
+socketio = SocketIO()
 
 def create_app():
     app = Flask(__name__)
+    logging.basicConfig(level=logging.DEBUG)
     app.config['SECRET_KEY'] = 'secret'
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -21,8 +24,9 @@ def create_app():
     JWTManager(app)
     # set up CORS to allow all origins and accept cookies
     CORS(app, supports_credentials=True, resources={r"/*": {"origins": "*"}})
-
     db.init_app(app)
+    socketio.init_app(app, async_mode='eventlet', cors_allowed_origins="*")
+
     with app.app_context():
         # now import the models from the models module
         from app.models import import_all_models
@@ -32,6 +36,8 @@ def create_app():
     # Import and register blueprints
     from app.routes.player import player_routes
     from app.routes.game import game_routes
+    from app.routes.socket import socket_routes
+    app.register_blueprint(socket_routes)
     app.register_blueprint(player_routes)
     app.register_blueprint(game_routes)
 
