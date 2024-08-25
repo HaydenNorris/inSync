@@ -11,6 +11,7 @@ class Game(BaseModel):
     STATUS_CLUE_GIVING = 'CLUE_GIVING'
     STATUS_GUESSING = 'GUESSING'
     STATUS_FINISHED = 'FINISHED'
+    MAX_CLUES = 3
 
     id = db.Column(db.Integer, primary_key=True)
     _status = db.Column('status', db.String(80), nullable=False)
@@ -89,8 +90,8 @@ class Game(BaseModel):
         from app.models.Clue import Clue
         # if self.status != self.STATUS_CLUE_GIVING: TODO: Uncomment this line after the tests
         #     raise Exception('Game is not in the clue giving status')
-        if clue_num < 1 or clue_num > 3:
-            raise Exception('Clue number must be between 1 and 3')
+        if clue_num < 1 or clue_num > self.MAX_CLUES:
+            raise Exception(f'Clue number must be between 1 and {self.MAX_CLUES}')
         play_clues = Clue.query.filter_by(game_id=self.id, player_id=player.id).order_by(Clue.id).all()
         player_scale_ids = [c.scale_id for c in play_clues]
 
