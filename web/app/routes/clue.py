@@ -56,8 +56,6 @@ def close_clue(player: 'Player', clue: 'Clue', game: 'Game', *args, **kwargs):
     try:
         clue.close()
         socketio.emit('clue_updated', ClueResource(clue).data(), room=game.socket_room)
-        game.set_current_clue()
-        socketio.emit('game_updated', GameResource(game).data(), room=game.socket_room)
         return jsonify({'message': 'Clue closed'}), 200
     except Exception as e:
         return jsonify({'message': 'Failed to close'}), 400
@@ -74,3 +72,8 @@ def refresh_clue(player: 'Player', clue_id: int, *args, **kwargs):
         return ClueResource(clue).json(), 200
     except Exception as e:
         return jsonify({'message': 'Failed to refresh'}), 400
+
+@clue_routes.route('/clue/<int:clue_id>')
+@player_must_be_linked_to_clue()
+def get_clue(player: 'Player', clue: 'Clue', *args, **kwargs):
+    return ClueResource(clue).json(), 200

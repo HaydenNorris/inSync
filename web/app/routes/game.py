@@ -81,10 +81,9 @@ def get_clue(game: 'Game', player: 'Player', clue_num: int, *args, **kwargs):
     except Exception as e:
         return jsonify({'message': str(e)}), 500
 
-@game_routes.route('/game/<int:game_id>/guess')
-@player_must_be_in_game()
+@game_routes.route('/game/<int:game_id>/guess/next', methods=['POST'])
+@player_must_be_in_game(host=True)
 def guess(game: 'Game', player: 'Player', *args, **kwargs):
-    clue = Clue.query.filter(Clue.game_id == game.id, Clue.guess_value == None).first()
-    if not clue:
-        return jsonify({'message': 'No more clues to guess'}), 400
-    return ClueResource(clue).json(), 200
+    game.set_current_clue()
+    socketio.emit('game_updated', GameResource(game).data(), room=game.socket_room)
+    return jsonify({'message': 'Guess submitted'}), 200
