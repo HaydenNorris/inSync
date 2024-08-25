@@ -15,8 +15,11 @@ class Game(BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     _status = db.Column('status', db.String(80), nullable=False)
     code = db.Column(db.String(6), nullable=False)
+    current_clue_id = db.Column(db.Integer, db.ForeignKey('clue.id'), nullable=True)
+
     players = db.relationship('Player', secondary='game_player', back_populates='games')
-    clues = db.relationship('Clue', back_populates='game')
+    # clues have a game_id field
+    clues = db.relationship('Clue', back_populates='game', primaryjoin="Clue.game_id==Game.id")
 
     @hybrid_property
     def status(self):
@@ -79,22 +82,22 @@ class Game(BaseModel):
             GamePlayer(game_id=self.id, player_id=player.id, display_name=display_name, host=host).save()
         return self
 
-    def get_clues_for(self, player: Player, clue_num: int) -> 'Clue':
-        from app.models.Clue import Clue
-        # if self.status != self.STATUS_CLUE_GIVING: TODO: Uncomment this line after the tests
-        #     raise Exception('Game is not in the clue giving status')
-        if clue_num < 1 or clue_num > 3:
-            raise Exception('Clue number must be between 1 and 3')
-        play_clues = Clue.query.filter_by(game_id=self.id, player_id=player.id).order_by(Clue.id).all()
-        player_scale_ids = [c.scale_id for c in play_clues]
+    # def get_clues_for(self, player: Player, clue_num: int) -> 'Clue':
+    #     from app.models.Clue import Clue
+    #     # if self.status != self.STATUS_CLUE_GIVING: TODO: Uncomment this line after the tests
+    #     #     raise Exception('Game is not in the clue giving status')
+    #     if clue_num < 1 or clue_num > 3:
+    #         raise Exception('Clue number must be between 1 and 3')
+    #     play_clues = Clue.query.filter_by(game_id=self.id, player_id=player.id).order_by(Clue.id).all()
+    #     player_scale_ids = [c.scale_id for c in play_clues]
+    #
+    #     # if the user has less than the requested number of clues, add more
+    #     while len(play_clues) < clue_num:
+    #         new_clue = self.__add_clue(player, player_scale_ids)
+    #         play_clues.append(new_clue)
+    #         player_scale_ids.append(new_clue.scale_id)
 
-        # if the user has less than the requested number of clues, add more
-        while len(play_clues) < clue_num:
-            new_clue = self.__add_clue(player, player_scale_ids)
-            play_clues.append(new_clue)
-            player_scale_ids.append(new_clue.scale_id)
-
-        return play_clues[clue_num - 1]
+        # return play_clues[clue_num - 1]
 
 
     def __add_clue(self, player: Player, exclude_scale_ids:list) -> 'Clue':
@@ -109,7 +112,19 @@ class Game(BaseModel):
         if len(clues) < player_count * 3:
             return False
         for clue in clues:
-            if not clue.clue:
+            if not clue.prompt:
                 return False
         return True
+
+    def set_current_clue(self):
+        from app.models.Clue import Clue
+        clue = Clue.query.filter(Clue.game_id == self.id, Clue.status == Clue.STATUS_OPEN).first()
+        if not clue:
+            self.current_clue_id = None
+            self.set_status(self.STATUS_FINISHED)
+            return
+        else:
+            self.current_clue_id = clue.id
+        self.save()
+
 

@@ -60,7 +60,7 @@ def login():
 
 @player_routes.route('/player', methods=['GET'])
 @jwt_required()
-def player():
+def player_info():
     player = Player.query.get(get_jwt_identity())
     if not player:
         return jsonify({'message': 'Player not found'}), 404

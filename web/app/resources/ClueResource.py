@@ -18,9 +18,10 @@ class ClueResource(Resource):
             'low': self.clue.scale.low,
             'value': self.clue.value,
             'max_value': self.clue.max_value,
-            'clue': self.clue.clue,
+            'prompt': self.clue.prompt,
             'player_id': self.clue.player_id,
             'player_name': game_player.display_name,
             'total_clues': len(self.clue.game.clues),
             'guess_value': self.clue.guess_value,
+            'status': self.clue.status,
         }
