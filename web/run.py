@@ -1,6 +1,8 @@
 from app import create_app
 import time
 
+from app import socketio
+
 attempt = 0
 app = None
 attempt_limit = 3
@@ -19,4 +21,4 @@ if app is None:
     raise Exception("App could not be created")
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    socketio.run(app, host='0.0.0.0', port=5000, debug=True)

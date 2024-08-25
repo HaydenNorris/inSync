@@ -22,6 +22,10 @@ class Game(BaseModel):
     def status(self):
         return self._status
 
+    @property
+    def socket_room(self):
+        return f"game_{self.code}_{self.id}"
+
     def set_status(self, value):
         if value not in [self.STATUS_NEW, self.STATUS_CLUE_GIVING, self.STATUS_GUESSING, self.STATUS_FINISHED]:
             raise Exception('Invalid status')
@@ -108,5 +112,4 @@ class Game(BaseModel):
             if not clue.clue:
                 return False
         return True
-
 
