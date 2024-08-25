@@ -64,13 +64,22 @@ def game_players(game: 'Game', *args, **kwargs):
 def start_game(game: 'Game', *args, **kwargs):
     try:
         game.set_status(Game.STATUS_CLUE_GIVING)
-        game.set_current_clue()
     except Exception as e:
         return jsonify({'message': f"Failed to start game: {str(e)}"}), 400
 
     socketio.emit('game_updated', GameResource(game).data(), room=game.socket_room)
 
     return jsonify({'message': 'Game started'}), 200
+
+@game_routes.route('/game/<int:game_id>/clue/<int:clue_num>')
+@player_must_be_in_game()
+def get_clue(game: 'Game', player: 'Player', clue_num: int, *args, **kwargs):
+    # get all the clues for the game and player
+    try:
+        clue = game.get_clues_for(player, clue_num)
+        return ClueResource(clue).json(), 200
+    except Exception as e:
+        return jsonify({'message': str(e)}), 500
 
 @game_routes.route('/game/<int:game_id>/guess')
 @player_must_be_in_game()
