@@ -70,5 +70,24 @@ class Clue(BaseModel):
 
     def close(self) -> 'Clue':
         self._status = self.STATUS_CLOSED
+        self.save()
+        self.score = self.__calculate_score()
         return self.save()
+
+
+    def __calculate_score(self) -> int:
+        if self._status != self.STATUS_CLOSED:
+            raise Exception('Cannot calculate score for open clue')
+
+        guess = self.guess_value
+        actual = self.value
+        diff = abs(guess - actual)
+        if diff == 0:
+            return 3
+        if diff == 1:
+            return 2
+        if diff == 2:
+            return 1
+        return 0
+
 

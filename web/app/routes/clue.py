@@ -12,7 +12,7 @@ clue_routes = Blueprint('clue', __name__)
 
 @clue_routes.route('/clue/<int:clue_id>/guess', methods=['POST'])
 @player_must_be_linked_to_clue()
-def submit_guess(player: 'Player', clue: 'Clue', *args, **kwargs):
+def submit_guess(clue: 'Clue', *args, **kwargs):
     data = request.get_json()
     guess_value = data.get('guess_value', None)
     if not guess_value is None:
