@@ -54,7 +54,7 @@ def close_clue(player: 'Player', clue: 'Clue', game: 'Game', *args, **kwargs):
     if clue.player_id == player.id:
         return jsonify({'message': 'You cannot close your own clue'}), 403
     try:
-        clue.close()
+        clue.close_and_score()
         socketio.emit('clue_updated', ClueResource(clue).data(), room=game.socket_room)
         return jsonify({'message': 'Clue closed'}), 200
     except Exception as e:

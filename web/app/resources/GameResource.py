@@ -12,4 +12,6 @@ class GameResource(Resource):
             'id': self.game.id,
             'status': self.game.status,
             'current_clue_id': self.game.current_clue_id,
+            'score': self.game.score,
+            'potential_score': self.game.potential_score
         }

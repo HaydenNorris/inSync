@@ -4,6 +4,7 @@ from app.models.GamePlayer import GamePlayer
 from app.models import BaseModel, Player
 from app.models.Scale import Scale
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy import func
 
 
 class Game(BaseModel):
@@ -29,6 +30,21 @@ class Game(BaseModel):
     @property
     def socket_room(self):
         return f"game_{self.code}_{self.id}"
+
+    @property
+    def score(self) -> int:
+        from app.models.Clue import Clue
+        return int(db.session.query(func.sum(Clue.score)).filter(
+            Clue.game_id == self.id,
+            Clue.status == Clue.STATUS_CLOSED
+        ).scalar() or 0)
+
+    @property
+    def potential_score(self) -> int:
+        from app.models.Clue import Clue
+        clue_count = len(self.clues)
+        return int(clue_count * Clue.MAX_SCORE)
+
 
     def set_status(self, value):
         if value not in [self.STATUS_NEW, self.STATUS_CLUE_GIVING, self.STATUS_GUESSING, self.STATUS_FINISHED]:

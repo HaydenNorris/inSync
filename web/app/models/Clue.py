@@ -10,6 +10,10 @@ class Clue(BaseModel):
     STATUS_OPEN = 'OPEN'
     STATUS_CLOSED = 'CLOSED'
 
+    MAX_SCORE = 3
+    MID_SCORE = 2
+    MIN_SCORE = 1
+
     id = db.Column(db.Integer, primary_key=True)
     game_id = db.Column(db.Integer, db.ForeignKey('game.id'), nullable=False)
     player_id = db.Column(db.Integer, db.ForeignKey('player.id'), nullable=False)
@@ -19,6 +23,7 @@ class Clue(BaseModel):
     _max_value = db.Column('max_value', db.Integer, nullable=False)
     guess_value = db.Column(db.Integer, nullable=True)
     _status = db.Column('status', db.String(80), nullable=False, default='NEW')
+    _score = db.Column('score', db.Integer, nullable=False, default=0)
 
     game = db.relationship('Game', back_populates='clues', primaryjoin="Clue.game_id==Game.id")
     scale = db.relationship('Scale')
@@ -27,6 +32,10 @@ class Clue(BaseModel):
     @hybrid_property
     def max_value(self):
         return self._max_value
+
+    @hybrid_property
+    def score(self):
+        return self._score
 
     @hybrid_property
     def value(self):
@@ -44,6 +53,7 @@ class Clue(BaseModel):
         self._value = Random().randint(1, max_value) # only set on creation
         self.guess_value = None
         self._status = self.STATUS_OPEN
+        self._score = 0
 
     @staticmethod
     def create(game:'Game', player:'Player', scale: 'Scale') -> 'Clue':
@@ -68,26 +78,22 @@ class Clue(BaseModel):
         self.scale_id = scale.id
         return self.save()
 
-    def close(self) -> 'Clue':
+    def close_and_score(self) -> 'Clue':
         self._status = self.STATUS_CLOSED
-        self.save()
-        self.score = self.__calculate_score()
+        self._score = self.__calculate_score()
         return self.save()
 
 
     def __calculate_score(self) -> int:
-        if self._status != self.STATUS_CLOSED:
-            raise Exception('Cannot calculate score for open clue')
-
         guess = self.guess_value
         actual = self.value
         diff = abs(guess - actual)
-        if diff == 0:
-            return 3
-        if diff == 1:
-            return 2
-        if diff == 2:
-            return 1
-        return 0
-
-
+        match diff:
+            case 0:
+                return self.MAX_SCORE
+            case 1:
+                return self.MID_SCORE
+            case 2:
+                return self.MIN_SCORE
+            case _:
+                return 0

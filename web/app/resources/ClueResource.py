@@ -24,4 +24,5 @@ class ClueResource(Resource):
             'total_clues': len(self.clue.game.clues),
             'guess_value': self.clue.guess_value,
             'status': self.clue.status,
+            'score': self.clue.score,
         }
