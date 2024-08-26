@@ -37,9 +37,11 @@ def create_app():
     from app.routes.player import player_routes
     from app.routes.game import game_routes
     from app.routes.socket import socket_routes
+    from app.routes.clue import clue_routes
     app.register_blueprint(socket_routes)
     app.register_blueprint(player_routes)
     app.register_blueprint(game_routes)
+    app.register_blueprint(clue_routes)
 
 
     # add seeders to app to be called from the command line

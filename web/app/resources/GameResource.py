@@ -10,5 +10,8 @@ class GameResource(Resource):
         return {
             'game_code': self.game.code,
             'id': self.game.id,
-            'status': self.game.status
+            'status': self.game.status,
+            'current_clue_id': self.game.current_clue_id,
+            'score': self.game.score,
+            'potential_score': self.game.potential_score
         }
