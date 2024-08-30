@@ -8,3 +8,4 @@ cryptography
 Flask-JWT-Extended
 flask-socketio
 eventlet
+python-dotenv
