@@ -12,13 +12,13 @@ socketio = SocketIO()
 def create_app():
     app = Flask(__name__)
     logging.basicConfig(level=logging.DEBUG)
-    app.config['SECRET_KEY'] = 'secret'
+    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['JWT_COOKIE_SECURE'] = False
     app.config['JWT_COOKIE_CSRF_PROTECT'] = True
     app.config['JWT_TOKEN_LOCATION'] = ["headers", "cookies"]
-    app.config['JWT_SECRET_KEY'] = 'jwt-secret'
+    app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY')
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = 36000
 
     JWTManager(app)

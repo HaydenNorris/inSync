@@ -1,5 +1,4 @@
 from flask import Blueprint, request, jsonify
-from app.models.Clue import Clue
 from app.models.Player import Player
 from app.models.Game import Game
 from flask_socketio import emit, join_room, leave_room
