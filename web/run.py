@@ -16,7 +16,7 @@ while attempt < attempt_limit:
         attempt += 1
         if attempt == attempt_limit:
             raise e
-        time.sleep(3000)
+        time.sleep(3)
         continue
 
 if app is None:
