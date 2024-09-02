@@ -16,6 +16,7 @@ while attempt < attempt_limit:
         attempt += 1
         if attempt == attempt_limit:
             raise e
+        print(f"Error creating app: {e}, attempt {attempt}/{attempt_limit}")
         time.sleep(3)
         continue
 
@@ -25,8 +26,8 @@ if app is None:
 if __name__ == "__main__":
     if os.environ.get('FLASK_ENV') == 'development':
         socketio.run(app, host='0.0.0.0', port=5000, debug=True)
-    else:
-        pass
+    elif os.environ.get('FLASK_ENV') == 'production':
+        socketio.run(app, host='0.0.0.0', port=5000)
 
 
 
