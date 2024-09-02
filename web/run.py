@@ -25,9 +25,11 @@ if app is None:
 
 if __name__ == "__main__":
     if os.environ.get('FLASK_ENV') == 'development':
+        print("Running in development mode")
         socketio.run(app, host='0.0.0.0', port=5000, debug=True)
-    elif os.environ.get('FLASK_ENV') == 'production':
-        socketio.run(app, host='0.0.0.0', port=5000)
+if os.environ.get('FLASK_ENV') == 'production':
+    print("Running in production mode")
+    socketio.run(app)
 
 
 
