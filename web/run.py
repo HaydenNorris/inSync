@@ -31,6 +31,5 @@ if os.environ.get('FLASK_ENV') == 'production':
     print("Running in production mode")
     try:
         socketio.run(app, host='0.0.0.0', port=5000)
-        print("running!")
     except Exception as e:
         print(f"Error running app: {e}")
