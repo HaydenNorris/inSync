@@ -2,7 +2,7 @@ services:
   web:
     build:
         context: .
-        dockerfile: Dockerfile.dev
+        dockerfile: Dockerfile
     container_name: insync_web
     ports:
       - "5000:5000"
