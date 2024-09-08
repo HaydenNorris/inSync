@@ -23,13 +23,15 @@ while attempt < attempt_limit:
 if app is None:
     raise Exception("App could not be created")
 
+port = int(os.environ.get('PORT', 5000))
+
 if __name__ == "__main__":
     if os.environ.get('FLASK_ENV') == 'development':
         print("Running in development mode")
-        socketio.run(app, host='0.0.0.0', port=5000, debug=True)
+        socketio.run(app, host='0.0.0.0', port=port, debug=True)
 if os.environ.get('FLASK_ENV') == 'production':
     print("Running in production mode!")
     try:
-        socketio.run(app, host='0.0.0.0', port=5000)
+        socketio.run(app, host='0.0.0.0', port=port)
     except Exception as e:
         print(f"Error running app: {e}")
