@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="93fb293a-dae2-4c02-bb70-05041aecb2de" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dockerfile" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="clue_status" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;HaydenNorris&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/HaydenNorris/inSync.git&quot;,
+    &quot;accountId&quot;: &quot;b37582a1-aaa1-4a4a-889b-2721dae5a9db&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2jjKUNYzmWErXBr8W36milEI163" />
+  <component name="ProjectLevelVcsManager">
+    <OptionsSetting value="false" id="Update" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "Python.run.executor": "Run",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/haydennorris/PycharmProjects/inSync",
+    "settings.editor.selected.configurable": "project.scopes"
+  }
+}]]></component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <console-settings module-name="inSync" is-module-sdk="true" working-directory="$PROJECT_DIR$/web/app">
+        <option name="myUseModuleSdk" value="true" />
+        <option name="myModuleName" value="inSync" />
+        <option name="myWorkingDirectory" value="$PROJECT_DIR$/web/app" />
+      </console-settings>
+    </option>
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/web/app/routes" />
+      <recent name="$PROJECT_DIR$/web/app/resources" />
+      <recent name="$PROJECT_DIR$/web/app/seeders" />
+      <recent name="$PROJECT_DIR$/web/app/models" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/" />
+      <recent name="$PROJECT_DIR$/web" />
+      <recent name="$PROJECT_DIR$/web/app" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.run">
+    <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="inSync" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/web/app" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/web/app/__init__.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="run" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="inSync" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/web" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/run.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.run" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-ce3d9afa04ac-ba05f1cad1b1-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-242.20224.347" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="93fb293a-dae2-4c02-bb70-05041aecb2de" name="Changes" comment="" />
+      <created>1721895061079</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1721895061079</updated>
+    </task>
+    <task id="LOCAL-00005" summary="WIP add access tokens - still need to add refresh.">
+      <option name="closed" value="true" />
+      <created>1723451148680</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1723451148680</updated>
+    </task>
+    <task id="LOCAL-00006" summary="add basic token auto refreshing">
+      <option name="closed" value="true" />
+      <created>1723522120990</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1723522120990</updated>
+    </task>
+    <task id="LOCAL-00007" summary="start on game routes">
+      <option name="closed" value="true" />
+      <created>1723530076964</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1723530076964</updated>
+    </task>
+    <task id="LOCAL-00008" summary="join game">
+      <option name="closed" value="true" />
+      <created>1723534113925</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1723534113925</updated>
+    </task>
+    <task id="LOCAL-00009" summary="join game, with concept of host and display name">
+      <option name="closed" value="true" />
+      <created>1723536420328</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1723536420328</updated>
+    </task>
+    <task id="LOCAL-00010" summary="get current players in the game">
+      <option name="closed" value="true" />
+      <created>1723616099027</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1723616099027</updated>
+    </task>
+    <task id="LOCAL-00011" summary="add token in header support">
+      <option name="closed" value="true" />
+      <created>1723702943478</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1723702943478</updated>
+    </task>
+    <task id="LOCAL-00012" summary="provide token on sign up">
+      <option name="closed" value="true" />
+      <created>1723703691813</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1723703691813</updated>
+    </task>
+    <task id="LOCAL-00013" summary="add game id to game payloads.">
+      <option name="closed" value="true" />
+      <created>1723705750527</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1723705750527</updated>
+    </task>
+    <task id="LOCAL-00014" summary="accept all origins for testing.">
+      <option name="closed" value="true" />
+      <created>1723705798773</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1723705798773</updated>
+    </task>
+    <task id="LOCAL-00015" summary="added beginning of scales&#10;added concept of seeders and commands">
+      <option name="closed" value="true" />
+      <created>1723809375513</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1723809375513</updated>
+    </task>
+    <task id="LOCAL-00016" summary="tidy up game to use consts and private status to control how it is updated.">
+      <option name="closed" value="true" />
+      <created>1723862541043</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1723862541043</updated>
+    </task>
+    <task id="LOCAL-00017" summary="add helper methods to player to check relation to games">
+      <option name="closed" value="true" />
+      <created>1723862611316</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1723862611316</updated>
+    </task>
+    <task id="LOCAL-00018" summary="tidy up game routes with decorator to get game, user and check the user is in the game.">
+      <option name="closed" value="true" />
+      <created>1723862663490</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1723862663490</updated>
+    </task>
+    <task id="LOCAL-00019" summary="tidy up in game check">
+      <option name="closed" value="true" />
+      <created>1723863983192</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1723863983192</updated>
+    </task>
+    <task id="LOCAL-00020" summary="add Clue model&#10;add clue generation to game model (for now)&#10;tidy relations to viewonly where I don't expect to back populate.&#10;add random function to scale model&#10;change all language of user to player&#10;add get clue route">
+      <option name="closed" value="true" />
+      <created>1723871065551</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1723871065551</updated>
+    </task>
+    <task id="LOCAL-00021" summary="fix">
+      <option name="closed" value="true" />
+      <created>1723873359790</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1723873359790</updated>
+    </task>
+    <task id="LOCAL-00022" summary="fix">
+      <option name="closed" value="true" />
+      <created>1723873740964</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1723873740964</updated>
+    </task>
+    <task id="LOCAL-00023" summary="WIP socket">
+      <option name="closed" value="true" />
+      <created>1723883199147</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1723883199147</updated>
+    </task>
+    <task id="LOCAL-00024" summary="temporarily hide status check for get clue.">
+      <option name="closed" value="true" />
+      <created>1723883528822</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1723883528822</updated>
+    </task>
+    <task id="LOCAL-00025" summary="working example of websocket">
+      <option name="closed" value="true" />
+      <created>1723887492851</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1723887492852</updated>
+    </task>
+    <task id="LOCAL-00026" summary="fix clue payload&#10;fix player seeder">
+      <option name="closed" value="true" />
+      <created>1723887525011</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1723887525011</updated>
+    </task>
+    <task id="LOCAL-00027" summary="change users to players">
+      <option name="closed" value="true" />
+      <created>1723979809773</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1723979809773</updated>
+    </task>
+    <task id="LOCAL-00028" summary="fix import">
+      <option name="closed" value="true" />
+      <created>1724188237462</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1724188237462</updated>
+    </task>
+    <task id="LOCAL-00029" summary="move game status when all clues given&#10;add endpoint to save clues&#10;add endpoint to get game status&#10;remove player check for game status update (for now)">
+      <option name="closed" value="true" />
+      <created>1724196371755</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1724196371755</updated>
+    </task>
+    <task id="LOCAL-00030" summary="remove version from docker file">
+      <option name="closed" value="true" />
+      <created>1724460897582</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1724460897582</updated>
+    </task>
+    <task id="LOCAL-00031" summary="working example of game rooms">
+      <option name="closed" value="true" />
+      <created>1724469176611</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1724469176611</updated>
+    </task>
+    <task id="LOCAL-00032" summary="add socket for game updated">
+      <option name="closed" value="true" />
+      <created>1724473146977</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1724473146977</updated>
+    </task>
+    <task id="LOCAL-00033" summary="add clue resource">
+      <option name="closed" value="true" />
+      <created>1724476630970</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1724476630970</updated>
+    </task>
+    <task id="LOCAL-00034" summary="updated patch to accept more data to patch and emit events.">
+      <option name="closed" value="true" />
+      <created>1724499438756</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1724499438756</updated>
+    </task>
+    <task id="LOCAL-00035" summary="change clue.clue to clue.prompt&#10;move clue routes to own file&#10;moved route wrappers to route init&#10;added latest clue to game&#10;updated clue patch route to post routes due to complex validation and side effects&#10;added status to clue">
+      <option name="closed" value="true" />
+      <created>1724551123707</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1724551123707</updated>
+    </task>
+    <task id="LOCAL-00036" summary="WIP - get game clue based on game resource.">
+      <option name="closed" value="true" />
+      <created>1724562536660</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1724562536660</updated>
+    </task>
+    <task id="LOCAL-00037" summary="add get clue&#10;add set next clue">
+      <option name="closed" value="true" />
+      <created>1724572650298</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1724572650298</updated>
+    </task>
+    <task id="LOCAL-00038" summary="tidy up max clues">
+      <option name="closed" value="true" />
+      <created>1724573002238</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1724573002238</updated>
+    </task>
+    <task id="LOCAL-00039" summary="WIP - score">
+      <option name="closed" value="true" />
+      <created>1724632090943</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1724632090943</updated>
+    </task>
+    <task id="LOCAL-00040" summary="add score and potential score.">
+      <option name="closed" value="true" />
+      <created>1724663060106</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1724663060106</updated>
+    </task>
+    <task id="LOCAL-00041" summary="tidy ups for production">
+      <option name="closed" value="true" />
+      <created>1724990487773</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1724990487773</updated>
+    </task>
+    <task id="LOCAL-00042" summary="add wsgi">
+      <option name="closed" value="true" />
+      <created>1724992346575</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1724992346575</updated>
+    </task>
+    <task id="LOCAL-00043" summary="add dotenv support">
+      <option name="closed" value="true" />
+      <created>1725007525460</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1725007525460</updated>
+    </task>
+    <task id="LOCAL-00044" summary="split docker dev and prod">
+      <option name="closed" value="true" />
+      <created>1725014066559</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1725014066559</updated>
+    </task>
+    <task id="LOCAL-00045" summary="put back sleep">
+      <option name="closed" value="true" />
+      <created>1725072139190</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1725072139190</updated>
+    </task>
+    <task id="LOCAL-00046" summary="sleep is in seconds, not milliseconds!">
+      <option name="closed" value="true" />
+      <created>1725072530257</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1725072530257</updated>
+    </task>
+    <task id="LOCAL-00047" summary="lets try without providing the path">
+      <option name="closed" value="true" />
+      <created>1725258225603</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1725258225603</updated>
+    </task>
+    <task id="LOCAL-00048" summary="let's go with the most basic file possible">
+      <option name="closed" value="true" />
+      <created>1725258999447</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1725258999447</updated>
+    </task>
+    <task id="LOCAL-00049" summary="try production run mode">
+      <option name="closed" value="true" />
+      <created>1725268996323</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1725268996323</updated>
+    </task>
+    <task id="LOCAL-00050" summary="add some logs">
+      <option name="closed" value="true" />
+      <created>1725269900383</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1725269900383</updated>
+    </task>
+    <task id="LOCAL-00051" summary="try with host and port">
+      <option name="closed" value="true" />
+      <created>1725270240394</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1725270240394</updated>
+    </task>
+    <task id="LOCAL-00052" summary="add try except">
+      <option name="closed" value="true" />
+      <created>1725270760248</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1725270760249</updated>
+    </task>
+    <task id="LOCAL-00053" summary="remove web folder">
+      <option name="closed" value="true" />
+      <created>1725758536693</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1725758536694</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="move game status when all clues given&#10;add endpoint to save clues&#10;add endpoint to get game status&#10;remove player check for game status update (for now)" />
+    <MESSAGE value="remove version from docker file" />
+    <MESSAGE value="working example of game rooms" />
+    <MESSAGE value="add socket for game updated" />
+    <MESSAGE value="add clue resource" />
+    <MESSAGE value="updated patch to accept more data to patch and emit events." />
+    <MESSAGE value="change clue.clue to clue.prompt&#10;move clue routes to own file&#10;moved route wrappers to route init&#10;added latest clue to game&#10;updated clue patch route to post routes due to complex validation and side effects&#10;added status to clue" />
+    <MESSAGE value="WIP - get game clue based on game resource." />
+    <MESSAGE value="add get clue&#10;add set next clue" />
+    <MESSAGE value="tidy up max clues" />
+    <MESSAGE value="WIP - score" />
+    <MESSAGE value="add score and potential score." />
+    <MESSAGE value="tidy ups for production" />
+    <MESSAGE value="add wsgi" />
+    <MESSAGE value="add dotenv support" />
+    <MESSAGE value="split docker dev and prod" />
+    <MESSAGE value="put back sleep" />
+    <MESSAGE value="sleep is in seconds, not milliseconds!" />
+    <MESSAGE value="lets try without providing the path" />
+    <MESSAGE value="let's go with the most basic file possible" />
+    <MESSAGE value="try production run mode" />
+    <MESSAGE value="add some logs" />
+    <MESSAGE value="try with host and port" />
+    <MESSAGE value="add try except" />
+    <MESSAGE value="remove web folder" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove web folder" />
+  </component>
+</project>

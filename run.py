@@ -28,7 +28,7 @@ if __name__ == "__main__":
         print("Running in development mode")
         socketio.run(app, host='0.0.0.0', port=5000, debug=True)
 if os.environ.get('FLASK_ENV') == 'production':
-    print("Running in production mode")
+    print("Running in production mode!")
     try:
         socketio.run(app, host='0.0.0.0', port=5000)
     except Exception as e:
